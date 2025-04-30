@@ -199,7 +199,7 @@ export class OxPlayer extends ClassInterface {
   }
 
   /** Sets the active character's grade in a group. If the grade is 0 they will be removed from the group. */
-  async setGroup(groupName: string, grade = 0) {
+  async setGroup(groupName: string, grade = 0, force = false) {
     if (!this.charId) return false;
 
     const group = GetGroup(groupName);
@@ -212,7 +212,7 @@ export class OxPlayer extends ClassInterface {
 
     if (!grade) {
       if (!currentGrade) return;
-      if (!(await RemoveCharacterGroup(this.charId, group.name))) return;
+      if (!force && !(await RemoveCharacterGroup(this.charId, group.name))) return;
 
       this.#removeGroup(group, currentGrade, true);
 

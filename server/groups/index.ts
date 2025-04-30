@@ -135,7 +135,7 @@ export async function DeleteGroup(groupName: string) {
   for (const id in players) {
     const player = players[id];
 
-    player.setGroup(groupName, 0);
+    player.setGroup(groupName, 0, true);
   }
 
   GlobalState[group.principal] = null;
