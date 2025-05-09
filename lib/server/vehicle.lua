@@ -54,7 +54,7 @@ end
 local Ox = Ox
 
 function Ox.GetVehicle(entityId)
-    return CreateVehicleInstance(exports.ox_core:GetVehicle(entityId))
+    return CreateVehicleInstance(exports.ox_core:GetVehicleFromEntity(entityId))
 end
 
 function Ox.GetVehicleFromEntity(entityId)
