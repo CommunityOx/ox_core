@@ -53,8 +53,8 @@ end
 ---@class OxServer
 local Ox = Ox
 
-function Ox.GetVehicle(entityId)
-    return CreateVehicleInstance(exports.ox_core:GetVehicle(entityId))
+function Ox.GetVehicle(handle)
+    return type(handle) == 'string' and Ox.GetVehicleFromVin(handle) or Ox.GetVehicleFromEntity(handle)
 end
 
 function Ox.GetVehicleFromEntity(entityId)
