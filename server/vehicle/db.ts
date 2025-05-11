@@ -9,7 +9,7 @@ export type VehicleRow = {
   plate: string;
   vin: string;
   model: string;
-  data: { properties: VehicleProperties; [key: string]: any };
+  data: { properties: Partial<VehicleProperties>; [key: string]: any };
 };
 
 if (DEFAULT_VEHICLE_STORE)
