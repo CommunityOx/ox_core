@@ -1,7 +1,7 @@
 {
   "name": "@communityox/ox_core",
   "author": "Overextended",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "license": "LGPL-3.0-or-later",
   "description": "A modern FiveM framework.",
   "type": "module",
@@ -16,10 +16,10 @@
     "./server": "./package/lib/server/index.js"
   },
   "scripts": {
-    "build": "node build.js",
-    "watch": "node build.js --watch",
-    "format": "pnpm biome format --write",
-    "lint": "pnpm biome lint --write"
+    "build": "bun run build.js",
+    "watch": "bun run build.js --watch",
+    "format": "bun run biome format --write",
+    "lint": "bun run biome lint --write"
   },
   "keywords": [
     "fivem",

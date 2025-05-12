@@ -20,6 +20,21 @@ export function GetGroupsByType(type: string) {
   }, [] as string[]);
 }
 
+export function GetGroupActivePlayers(groupName: string) {
+  const group = groups[groupName];
+
+  return group ? [...group.activePlayers] : [];
+}
+
+export function GetGroupActivePlayersByType(type: string) {
+  return Object.values(groups).reduce((acc, group) => {
+    if (group.type === type) {
+      acc.push(...group.activePlayers);
+    }
+    return acc;
+  }, [] as number[]);
+}
+
 export function SetGroupPermission(groupName: string, grade: number, permission: string, value: 'allow' | 'deny') {
   const permissions = GetGroupPermissions(groupName);
 
@@ -47,6 +62,8 @@ function SetupGroup(data: DbGroup) {
   GlobalState[group.principal] = group;
   GlobalState[`${group.name}:count`] = 0;
   GlobalState[`${group.name}:activeCount`] = 0;
+
+  group.activePlayers = new Set();
 
   groups[group.name] = group;
   group.grades = group.grades.reduce(
@@ -99,6 +116,7 @@ export async function CreateGroup(data: CreateGroupProperties) {
     grades: grades,
     accountRoles: accountRoles,
     hasAccount: data.hasAccount ?? false,
+    activePlayers: new Set(),
   };
 
   const response = await InsertGroup(group);
@@ -185,3 +203,5 @@ exports('SetGroupPermission', SetGroupPermission);
 exports('RemoveGroupPermission', RemoveGroupPermission);
 exports('CreateGroup', CreateGroup);
 exports('DeleteGroup', DeleteGroup);
+exports('GetGroupActivePlayers', GetGroupActivePlayers);
+exports('GetGroupActivePlayersByType', GetGroupActivePlayersByType);

@@ -30,7 +30,7 @@ export class OxVehicle extends ClassInterface {
   entity?: number;
   netId?: number;
   #metadata: Dict<any>;
-  #properties: VehicleProperties;
+  #properties: Partial<VehicleProperties>;
   #stored: string | null;
 
   protected static members: Dict<OxVehicle> = {};
@@ -151,7 +151,7 @@ export class OxVehicle extends ClassInterface {
     make: string,
     stored: string | null,
     metadata: Dict<any>,
-    properties: VehicleProperties,
+    properties: Partial<VehicleProperties>,
     id?: number,
     owner?: number,
     group?: string,
@@ -259,7 +259,7 @@ export class OxVehicle extends ClassInterface {
     SetVehicleColumn(this.id, 'plate', this.plate);
   }
 
-  setProperties(properties: VehicleProperties, apply?: boolean) {
+  setProperties(properties: Partial<VehicleProperties>, apply?: boolean) {
     if (!this.entity) return;
 
     this.#properties = typeof properties === 'string' ? JSON.parse(properties) : properties;
