@@ -63,8 +63,9 @@ function CreateVehicleInstance(vehicle: _OxVehicle) {
 }
 
 export function GetVehicle(entityId: number): OxVehicle;
-export function GetVehicle(vin: number | string) {
-  return typeof vin === 'string' ? GetVehicleFromVin(vin) : GetVehicleFromEntity(vin);
+export function GetVehicle(vin: string): OxVehicle;
+export function GetVehicle(handle: number | string) {
+  return typeof handle === 'string' ? GetVehicleFromVin(handle) : GetVehicleFromEntity(handle);
 }
 
 export function GetVehicleFromEntity(entityId: number) {
