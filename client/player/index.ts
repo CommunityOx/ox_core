@@ -62,11 +62,9 @@ class PlayerSingleton {
     netEvent('ox:setPlayerStatus', (key: string, value: number, set?: boolean) => {
       if (set) {
         Statuses[key] = GlobalState[`status.${key}`];
-        this.#statuses[key] = value;
-        return;
       }
 
-      this.#statuses[key] += value;
+      this.#statuses[key] = value;
     });
 
     netEvent('ox:setGroup', (name: string, grade: number) => {
