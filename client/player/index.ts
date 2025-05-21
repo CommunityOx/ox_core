@@ -157,21 +157,23 @@ class PlayerSingleton {
   setStatus(name: string, value: number) {
     if (this.#statuses[name] === undefined) return false;
 
-    this.#statuses[name] = value;
+    this.#statuses[name] = value < 0 ? 0 : value > 100 ? 100 : Number.parseFloat((value).toPrecision(8));
     return true;
   }
 
   addStatus(name: string, value: number) {
     if (this.#statuses[name] === undefined) return false;
 
-    this.#statuses[name] += value;
+    const newValue = this.#statuses[name] + value;
+    this.#statuses[name] = newValue < 0 ? 0 : newValue > 100 ? 100 : Number.parseFloat((newValue).toPrecision(8));
     return true;
   }
 
   removeStatus(name: string, value: number) {
     if (this.#statuses[name] === undefined) return false;
 
-    this.#statuses[name] -= value;
+    const newValue = this.#statuses[name] - value;
+    this.#statuses[name] = newValue < 0 ? 0 : newValue > 100 ? 100 : Number.parseFloat((newValue).toPrecision(8));
     return true;
   }
 

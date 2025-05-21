@@ -318,12 +318,10 @@ export class OxPlayer extends ClassInterface {
   setStatus(statusName: string, value = Statuses[statusName].default) {
     if (Statuses[statusName] === undefined) return;
 
-    if (value > 100) value = 100;
-    else if (value < 0) value = 0;
+    const newValue = value < 0 ? 0 : value > 100 ? 100 : Number.parseFloat((value).toPrecision(8));
+    this.#statuses[statusName] = newValue
 
-    this.#statuses[statusName] = value;
-
-    if (!source) this.emit('ox:setPlayerStatus', statusName, value, true);
+    this.emit('ox:setPlayerStatus', statusName, newValue, true);
 
     return true;
   }
@@ -342,7 +340,11 @@ export class OxPlayer extends ClassInterface {
   addStatus(statusName: string, value: number) {
     if (this.#statuses[statusName] === undefined) return;
 
-    this.emit('ox:setPlayerStatus', statusName, +value);
+    let newValue = this.#statuses[statusName] + value;
+    newValue = newValue < 0 ? 0 : newValue > 100 ? 100 : Number.parseFloat((newValue).toPrecision(8));
+
+    this.#statuses[statusName] = newValue;
+    this.emit('ox:setPlayerStatus', statusName, newValue);
 
     return true;
   }
@@ -351,7 +353,11 @@ export class OxPlayer extends ClassInterface {
   removeStatus(statusName: string, value: number) {
     if (this.#statuses[statusName] === undefined) return;
 
-    this.emit('ox:setPlayerStatus', statusName, -value);
+    let newValue = this.#statuses[statusName] - value;
+    newValue = newValue < 0 ? 0 : newValue > 100 ? 100 : Number.parseFloat((newValue).toPrecision(8));
+
+    this.#statuses[statusName] = newValue;
+    this.emit('ox:setPlayerStatus', statusName, newValue);
 
     return true;
   }
