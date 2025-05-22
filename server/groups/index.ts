@@ -57,6 +57,7 @@ function SetupGroup(data: DbGroup) {
   const group: OxGroup = {
     ...data,
     principal: `group.${data.name}`,
+    hasAccount: Boolean(data.hasAccount),
   };
 
   GlobalState[group.principal] = group;
