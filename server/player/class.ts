@@ -655,5 +655,6 @@ OxPlayer.init();
 
 exports('SaveAllPlayers', (arg: any) => OxPlayer.saveAll(arg));
 exports('GetPlayerFromUserId', (arg: any) => OxPlayer.getFromUserId(arg));
+exports('GetPlayerFromCharId', (arg: any) => OxPlayer.getFromCharId(arg));
 exports('GetPlayerFromFilter', (arg: any) => OxPlayer.getFromFilter(arg));
 exports('GetPlayers', (arg: any) => OxPlayer.getAll(arg, true));
