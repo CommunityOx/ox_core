@@ -581,6 +581,7 @@ export class OxPlayer extends ClassInterface {
     const { isDead, gender, dateOfBirth, phoneNumber, health, armour } = metadata;
     const groups = await GetCharacterGroups(this.charId);
     const licenses = await GetCharacterLicenses(this.charId);
+    const activeGroup = groups.find((group) => group.isActive)?.name;
 
     character.health = isDead ? 0 : health;
     character.armour = armour;
@@ -599,15 +600,15 @@ export class OxPlayer extends ClassInterface {
     this.set('gender', gender, true);
     this.set('dateOfBirth', dateOfBirth, true);
     this.set('phoneNumber', phoneNumber, true);
-    this.set('activeGroup', groups.find((group) => group.isActive)?.name, true);
+    this.set('activeGroup', activeGroup, true);
 
-    const activeGroup = this.get('activeGroup');
     if (activeGroup) {
-      GlobalState[`${this.get('activeGroup')}:${activeGroup}`] += 1;
+      GlobalState[`${activeGroup}:activeCount`] += 1;
 
       const group = GetGroup(activeGroup)
       group.activePlayers.add(+this.source);
     }
+
     DEV: console.info(`Restored OxPlayer<${this.userId}> previous active group: ${activeGroup}`);
 
     OxPlayer.keys.charId[character.charId] = this;
