@@ -17,8 +17,8 @@ addCommand<{ parseAll: boolean }>(
 
     if (!response) return;
 
-    const updatedVehicles = SortObjectProperties({ ...GetVehicleData(), ...response[0] });
-    const updatedStats = SortObjectProperties({ ...GetTopVehicleStats(), ...response[1] });
+    const updatedVehicles = args.parseAll ? SortObjectProperties({ ...response[0] }) : SortObjectProperties({ ...GetVehicleData(), ...response[0] });
+    const updatedStats = args.parseAll ? SortObjectProperties({ ...response[1] }) : SortObjectProperties({ ...GetTopVehicleStats(), ...response[1] });
 
     if (response[2].length)
       console.log(
