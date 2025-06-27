@@ -1,6 +1,7 @@
 import type { OxVehicle as _OxVehicle } from 'server/vehicle/class';
 import type { CreateVehicleData } from 'server/vehicle';
 import type { VehicleRow } from 'server/vehicle/db';
+import { Dict } from 'types';
 
 class VehicleInterface {
   constructor(
@@ -79,6 +80,18 @@ export function GetVehicleFromNetId(netId: number) {
 
 export function GetVehicleFromVin(vin: string) {
   return CreateVehicleInstance(exports.ox_core.GetVehicleFromVin(vin));
+}
+
+export function GetVehicles(filter?: Dict<any>): OxVehicle[] {
+  const vehicles = exports.ox_core.GetVehicles(filter);
+
+  for (const id in vehicles) vehicles[id] = CreateVehicleInstance(vehicles[id]);
+
+  return vehicles;
+}
+
+export function GetVehicleFromFilter(filter: Dict<any>) {
+  return CreateVehicleInstance(exports.ox_core.GetVehicleFromFilter(filter));
 }
 
 export async function CreateVehicle(

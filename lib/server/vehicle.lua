@@ -69,6 +69,20 @@ function Ox.GetVehicleFromVin(vin)
     return CreateVehicleInstance(exports.ox_core:GetVehicleFromVin(vin))
 end
 
+function Ox.GetVehicles(filter)
+    local vehicles = exports.ox_core:GetVehicles(filter)
+
+    for i = 1, #vehicles do
+        vehicles[i] = CreateVehicleInstance(vehicles[i])
+    end
+
+    return vehicles
+end
+
+function Ox.GetVehicleFromFilter(filter)
+    return CreateVehicleInstance(exports.ox_core:GetVehicleFromFilter(filter))
+end
+
 function Ox.CreateVehicle(data, coords, heading)
     return CreateVehicleInstance(exports.ox_core:CreateVehicle(data, coords, heading));
 end

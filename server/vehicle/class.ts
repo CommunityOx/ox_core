@@ -79,9 +79,39 @@ export class OxVehicle extends ClassInterface {
     return this.keys.entity[entityId];
   }
 
-  /** Gets all instances of OxVehicle. */
-  static getAll(): Dict<OxVehicle> {
-    return this.members;
+  /** Compares vehicle fields and metadata to a filter, returning the vehicle if all values match. */
+  private filter(criteria: Dict<any>) {
+    for (const key in criteria) {
+      const value = criteria[key];
+
+      if (this[key as keyof OxVehicle] !== value && this.#metadata[key] !== value) return;
+    }
+
+    return this;
+  }
+
+  /** Get an instance of OxVehicle that matches the filter. */
+  static getFromFilter(filter: Dict<any>) {
+    for (const id in this.members) {
+      const vehicle = this.members[id].filter(filter);
+      if (vehicle) return vehicle;
+    }
+  }
+
+  /** Gets all instances of OxVehicle, optionally comparing against a filter. */
+  static getAll(filter?: Dict<any>, asArray?: false): Dict<OxVehicle>;
+  static getAll(filter?: Dict<any>, asArray?: true): OxVehicle[];
+  static getAll(filter?: Dict<any>, asArray = false): Dict<OxVehicle> | OxVehicle[] {
+    if (!filter) return asArray ? Object.values(this.members) : this.members;
+
+    const obj: Dict<OxVehicle> = {};
+
+    for (const id in this.members) {
+      const vehicle = this.members[id].filter(filter);
+      if (vehicle) obj[id] = vehicle;
+    }
+
+    return asArray ? Object.values(obj) : obj;
   }
 
   static async generateVin({ make, name }: VehicleData, isOwned = true) {
@@ -310,5 +340,7 @@ exports('SaveAllVehicles', (arg: any) => OxVehicle.saveAll(arg));
 exports('GetVehicleFromNetId', (arg: any) => OxVehicle.getFromNetId(arg));
 exports('GetVehicleFromVin', (arg: any) => OxVehicle.get(arg));
 exports('GetVehicleFromEntity', (arg: any) => OxVehicle.getFromEntity(arg));
+exports('GetVehicleFromFilter', (arg: any) => OxVehicle.getFromFilter(arg))
+exports('GetVehicles', (arg: any) => OxVehicle.getAll(arg, true));
 exports('GenerateVehicleVin', (model: string) => OxVehicle.generateVin(GetVehicleData(model)));
 exports('GenerateVehiclePlate', () => OxVehicle.generatePlate());
