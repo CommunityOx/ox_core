@@ -313,14 +313,22 @@ export class OxVehicle extends ClassInterface {
         ? rotation
         : Vector3.fromObject(rotation || hasEntity ? GetEntityRotation(this.entity as number) : null);
 
-    if (hasEntity) DeleteEntity(this.entity as number);
+    // Clean up existing entity and registry entries before spawning new one
+    if (hasEntity) {
+      emit('ox:despawnVehicle', this.entity, this.id);
+      DeleteEntity(this.entity as number);
+    }
 
+    // Remove from registry before creating new entity to avoid conflicts
+    OxVehicle.remove(this.vin);
+
+    // Create new entity
     this.entity = OxVehicle.spawn(this.model, coords as Vector3, typeof rotation === 'number' ? rotation : 0);
     this.netId = NetworkGetNetworkIdFromEntity(this.entity);
 
     if (typeof rotation !== 'number') SetEntityRotation(this.entity, rotation.x, rotation.y, rotation.z, 2, false);
 
-    OxVehicle.remove(this.vin);
+    // Re-add to registry after successful spawn
     OxVehicle.add(this.vin, this);
     SetVehicleNumberPlateText(this.entity, this.#properties.plate || this.plate);
     setVehicleProperties(this.entity, this.#properties);
