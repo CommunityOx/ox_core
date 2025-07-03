@@ -74,8 +74,3 @@ jobs:
         uses: EndBug/latest-tag@v1
         with:
           ref: ${{ github.ref_name }}
-
-      - name: Publish package to npm registry
-        run: bun publish --access public
-        env:
-          NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN }}
