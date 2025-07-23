@@ -646,7 +646,7 @@ export class OxPlayer extends ClassInterface {
 
       emit('ox:deletedCharacter', this.source, this.userId, charId);
 
-      DEV: console.info(`Deleted character ${this.charId} for OxPlayer<${this.userId}>`);
+      DEV: console.info(`Deleted character ${charId} for OxPlayer<${this.userId}>`);
       return true;
     }
   }
