@@ -51,7 +51,7 @@ export function SaveCharacterData(values: any[] | any[][], batch?: boolean) {
 }
 
 export async function DeleteCharacter(charId: number) {
-  return (await db.update('UPDATE characters SET deleted = curdate() WHERE charId = ?', [charId])) === 1;
+  return (await db.update('UPDATE characters SET deleted = CURRENT_TIMESTAMP() WHERE charId = ?', [charId])) === 1;
 }
 
 export function GetCharacterMetadata(charId: number) {
