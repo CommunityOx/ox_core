@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `characters`
   `armour`      TINYINT UNSIGNED                                         NULL,
   `statuses`    LONGTEXT COLLATE utf8mb4_bin DEFAULT JSON_OBJECT()       NOT NULL
       CHECK (JSON_VALID(`statuses`)),
-  `deleted`     DATE                                                     NULL,
+  `deleted`     DATETIME                                                     NULL,
   CONSTRAINT `characters_stateId_unique`
       UNIQUE (`stateId`),
   CONSTRAINT `characters_userId_fk`
