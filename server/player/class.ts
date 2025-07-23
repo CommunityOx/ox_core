@@ -203,7 +203,7 @@ export class OxPlayer extends ClassInterface {
 
     SetActiveGroup(this.charId, temp ? undefined : groupName);
     this.set('activeGroup', groupName, true);
-    emit('ox:setActiveGroup', this.source, groupName);
+    emit('ox:setActiveGroup', this.source, groupName, currentActiveGroup);
 
     return true;
   }
