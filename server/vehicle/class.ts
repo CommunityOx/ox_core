@@ -139,9 +139,9 @@ export class OxVehicle extends ClassInterface {
     return isOwned ? vin : `T${vin}`;
   }
 
-  static async generatePlate() {
+  static async generatePlate(pattern: string = PLATE_PATTERN) {
     while (true) {
-      const plate = getRandomString(PLATE_PATTERN);
+      const plate = getRandomString(pattern);
 
       if (await IsPlateAvailable(plate)) return plate;
     }
@@ -343,4 +343,4 @@ exports('GetVehicleFromEntity', (arg: any) => OxVehicle.getFromEntity(arg));
 exports('GetVehicleFromFilter', (arg: any) => OxVehicle.getFromFilter(arg))
 exports('GetVehicles', (arg: any) => OxVehicle.getAll(arg, true));
 exports('GenerateVehicleVin', (model: string) => OxVehicle.generateVin(GetVehicleData(model)));
-exports('GenerateVehiclePlate', () => OxVehicle.generatePlate());
+exports('GenerateVehiclePlate', (pattern?: string) => OxVehicle.generatePlate(pattern));
