@@ -50,6 +50,8 @@ VehicleInterface.prototype.toString = function () {
 export type OxVehicle = _OxVehicle & VehicleInterface;
 
 function CreateVehicleInstance(vehicle: _OxVehicle) {
+  if (!vehicle) return;
+
   return new VehicleInterface(
     vehicle.entity,
     vehicle.netId,
