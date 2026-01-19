@@ -129,3 +129,19 @@ onClientCallback('ox:getLicense', (playerId, licenseName: string, target?: numbe
 
   if (player) return licenseName ? player.getLicense(licenseName) : player.getLicenses();
 });
+
+on('txAdmin:events:playerHealed', ({ target, author }: { target: number, author: string }) => {
+  if (target === -1) {
+    const players = OxPlayer.getAll();
+
+    for (const id in players) {
+      const state = Player(id).state;
+      
+      state.set('isDead', false, true);
+    }
+  } else {
+    const state = Player(target).state;
+    
+    state.set('isDead', false, true);
+  }  
+});
