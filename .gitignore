@@ -3,6 +3,7 @@ node_modules
 dist
 fxmanifest.lua
 .yarn.installed
+pnpm-lock.yaml
 *.zip
 **.d.ts
 *.tgz
