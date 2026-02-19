@@ -5,6 +5,10 @@ on:
     tags:
       - 'v*.*.*'
 
+permissions:
+  id-token: write # Required for OIDC
+  contents: write
+
 jobs:
   create-release:
     if: github.actor_id != 210085057
@@ -76,6 +80,4 @@ jobs:
           ref: ${{ github.ref_name }}
 
       - name: Publish package to npm registry
-        run: bun publish --access public
-        env:
-          NPM_CONFIG_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: bunx npm publish --access public --provenance
