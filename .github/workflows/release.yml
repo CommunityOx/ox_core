@@ -79,5 +79,11 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+
       - name: Publish package to npm registry
-        run: bunx npm publish --access public --provenance
+        run: npm publish --access public --provenance
