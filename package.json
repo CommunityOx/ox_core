@@ -30,9 +30,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/communityox/ox_core.git"
+    "url": "git+https://github.com/CommunityOx/ox_core.git"
   },
-  "bugs": "https://github.com/communityox/ox_core/issues",
+  "bugs": "https://github.com/CommunityOx/ox_core/issues",
   "devDependencies": {
     "@citizenfx/client": "latest",
     "@citizenfx/server": "latest",
