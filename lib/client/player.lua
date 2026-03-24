@@ -2,15 +2,22 @@
 ---@class OxPlayerClient : OxClass
 local OxPlayer = lib.class('OxPlayer')
 
--- Support for `player.method` rather than self (:) syntax
+-- Support both obj.method() and obj:method() calling conventions.
+-- The closure captures self, so : syntax passes an extra self as first arg.
 function OxPlayer:__index(index)
     local value = OxPlayer[index] --[[@as any]]
 
     if type(value) == 'function' then
-        self[index] = value == OxPlayer.__call and function(...)
-            return value(self, index, ...)
-        end or function(...)
-            return value(self, ...)
+        self[index] = value == OxPlayer.__call and function(first, ...)
+            if first == self then
+                return value(self, index, ...)
+            end
+            return value(self, index, first, ...)
+        end or function(first, ...)
+            if first == self then
+                return value(self, ...)
+            end
+            return value(self, first, ...)
         end
 
         return self[index]
